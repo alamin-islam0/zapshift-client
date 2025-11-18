@@ -1,14 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default;
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+/* Theme setup */
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #caeb66;
+  --color-secondary: #03373d;
+  --color-text: #606060;
+  --color-accent: #caeb66;
+}
 
+/* Normal button */
+.my-btn {
+  background-color: #caeb66;
+  color: #03373d;
+  border-color: #caeb66;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 99px;
+}
+.my-btn:hover {
+  background-color: #ffffff;
+  border: 1px solid #caeb66;
+}
+
+/* Bordered btn */
+.my-bordered-btn{
+  background-color: #ffffff;
+  color: #caeb66;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border: 1px solid #caeb66;
+  border-radius: 99px;
+}
+.my-bordered-btn:hover {
+  background-color: #caeb66;
+}
+
+/* Global font */
 body {
   font-family: "Urbanist", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
-
-/* daisyui: {
-  themes: ["light"], // only light theme
-} */
