@@ -6,7 +6,7 @@ import { GoArrowUpRight } from "react-icons/go";
 const HeroSection = () => {
     return (
         <div className="container mx-auto p-6 lg:p-20 bg-white rounded-3xl lg:rounded-4xl mt-5 lg:mt-10">
-            <div className="flex flex-col lg:flex-row gap-12 items-center">
+            <div className="flex flex-col-reverse lg:flex-row gap-12 items-center">
                 {/* Left Column */}
                 <div className="space-y-8 w-full lg:w-[60%]">
                     {/* Hero Icon */}
