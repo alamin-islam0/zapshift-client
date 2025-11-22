@@ -14,6 +14,10 @@
   --color-accent: #caeb66;
 }
 
+body{
+  background: #ebeced;
+}
+
 /* Normal button */
 .my-btn {
   background-color: #caeb66;
