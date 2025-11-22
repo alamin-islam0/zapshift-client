@@ -1,0 +1,82 @@
+/* FAQ Accordion Styles */
+.faq-accordion .szh-accordion__item {
+  margin-bottom: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+}
+
+.faq-accordion .szh-accordion__item-btn {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  color: #03373d;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  transition: background-color 0.5s ease-in-out, color 0.3s ease-in-out;
+  border: none;
+  cursor: pointer;
+  will-change: background-color;
+}
+
+.faq-accordion .szh-accordion__item-btn:hover {
+  background-color: #f9fafb;
+}
+
+.faq-accordion .szh-accordion__item--status-enter .szh-accordion__item-btn,
+.faq-accordion .szh-accordion__item--status-entered .szh-accordion__item-btn {
+  background-color: #e8f4f5;
+  color: #03373d;
+}
+
+.faq-accordion .szh-accordion__item-content {
+  padding: 1rem 1.5rem 1.5rem;
+  background-color: #e8f4f5;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out 0.1s;
+}
+
+/* Chevron Icon */
+.faq-accordion .szh-accordion__item-btn::after {
+  content: "▼";
+  font-size: 1.25rem;
+  color: #6b7280;
+  transition: transform 0.5s ease-in-out, color 0.3s ease-in-out;
+  transform-origin: center;
+  flex-shrink: 0;
+  margin-left: 1rem;
+  will-change: transform;
+}
+
+.faq-accordion .szh-accordion__item--status-enter .szh-accordion__item-btn::after,
+.faq-accordion .szh-accordion__item--status-entered .szh-accordion__item-btn::after {
+  transform: rotate(180deg);
+  color: #03373d;
+}
+
+/* Smooth height transition for content */
+.faq-accordion .szh-accordion__item-panel {
+  transition: height 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+/* Responsive Styles */
+@media (min-width: 1024px) {
+  .faq-accordion .szh-accordion__item-btn {
+    padding: 1.25rem 2rem;
+    font-size: 1.125rem;
+  }
+
+  .faq-accordion .szh-accordion__item-content {
+    padding: 1.5rem 2rem;
+  }
+
+  .faq-accordion .szh-accordion__item-btn::after {
+    font-size: 1.5rem;
+  }
+}

@@ -65,7 +65,7 @@ const Header = () => {
           <a className="btn btn-ghost border border-gray-200 rounded-full px-6 hover:bg-gray-50">
             Sign In
           </a>
-          <a className="btn bg-[#D9F27E] hover:bg-[#cce865] text-black rounded-full px-2 pl-6 flex items-center gap-2 border-none">
+          <a className="hidden lg:flex btn bg-[#D9F27E] hover:bg-[#cce865] text-black rounded-full px-2 pl-6 items-center gap-2 border-none">
             Be a rider
             <span className="bg-[#1A1A1A] text-white p-2 rounded-full">
               <GoArrowUpRight className="text-lg" />
