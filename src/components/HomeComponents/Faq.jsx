@@ -1,82 +1,124 @@
-import React from "react";
-import { Accordion, AccordionItem } from "@szhsin/react-accordion";
-import { GoArrowUpRight } from "react-icons/go";
-import "./Faq.css";
+import * as React from "react";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const Faq = () => {
-  const faqs = [
-    {
-      question: "How does this posture corrector work?",
-      answer:
-        "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day. Here's how it typically functions: A posture corrector works by providing support and gentle alignment to your shoulders.",
-    },
-    {
-      question: "Is it suitable for all ages and body types?",
-      answer:
-        "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day. Here's how it typically functions: A posture corrector works by providing support and gentle alignment to your shoulders.",
-    },
-    {
-      question: "Does it really help with back pain and posture improvement?",
-      answer:
-        "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day. Here's how it typically functions: A posture corrector works by providing support and gentle alignment to your shoulders.",
-    },
-    {
-      question: "Does it have smart features like vibration alerts?",
-      answer:
-        "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day. Here's how it typically functions: A posture corrector works by providing support and gentle alignment to your shoulders.",
-    },
-    {
-      question: "How will I be notified when the product is back in stock?",
-      answer:
-        "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day. Here's how it typically functions: A posture corrector works by providing support and gentle alignment to your shoulders.",
-    },
-  ];
+const faqs = [
+  {
+    question: "How does this posture corrector work?",
+    answer:
+      "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day.",
+  },
+  {
+    question: "Is it suitable for all ages and body types?",
+    answer:
+      "Most posture correctors are adjustable and fit a wide range of body types; always check sizing guides for the best fit.",
+  },
+  {
+    question: "Does it really help with back pain and posture improvement?",
+    answer:
+      "It can reduce strain by improving posture. For chronic issues consult a healthcare professional for tailored advice.",
+  },
+  {
+    question: "Does it have smart features like vibration alerts?",
+    answer:
+      "Some models offer vibration reminders—check product specs for feature availability.",
+  },
+  {
+    question: "How will I be notified when the product is back in stock?",
+    answer:
+      "Sign up for back-in-stock notifications via email on the product page and we’ll notify you when it is available.",
+  },
+];
+
+export default function Faq() {
+  const [expanded, setExpanded] = React.useState(0);
+
+  const handleChange = (panel) => (_, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   return (
-    <div className="py-12 lg:py-20">
-      <div className="container mx-auto px-6 lg:px-20">
-        {/* Header */}
-        <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-[#03373d] mb-4">
-            Frequently Asked Question (FAQ)
-          </h2>
-          <p className="text-gray-600 text-sm lg:text-base max-w-3xl mx-auto leading-relaxed">
-            Enhance posture, mobility, and well-being effortlessly with Posture
-            Pro. Achieve proper alignment, reduce pain, and strengthen your body
-            with ease!
-          </p>
-        </div>
-
-        {/* Accordion */}
-        <div className="w-full max-w-4xl mx-auto mb-8">
-          <Accordion
-            transition
-            transitionTimeout={500}
-            initialEntered={[0]}
-            className="faq-accordion"
-          >
-            {faqs.map((faq, index) => (
-              <AccordionItem key={index} header={faq.question}>
-                <p className="text-gray-600 text-sm lg:text-base leading-relaxed">
-                  {faq.answer}
-                </p>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-
-        {/* See More Button */}
-        <div className="flex justify-center">
-          <button className="btn bg-[#caeb66] hover:bg-[#b8d955] text-[#03373d] border-none rounded-full px-6 lg:px-8 h-12 lg:h-14 text-base lg:text-lg font-semibold flex items-center gap-2">
-            See More FAQ's
-            <span className="bg-[#1A1A1A] text-white p-1.5 rounded-full">
-              <GoArrowUpRight className="text-sm" />
-            </span>
-          </button>
-        </div>
+    <div className="py-16 px-6 lg:px-20 max-w-4xl mx-auto">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl lg:text-4xl font-bold text-[#03373d] mb-3">
+          Frequently Asked Question (FAQ)
+        </h2>
+        <p className="text-gray-600 text-sm lg:text-base max-w-2xl mx-auto leading-relaxed">
+          Enhance posture, mobility, and well-being effortlessly with Posture
+          Pro.
+        </p>
       </div>
+
+      {faqs.map((faq, i) => (
+        <Accordion
+          key={i}
+          expanded={expanded === i}
+          onChange={handleChange(i)}
+          sx={{
+            mb: 2,
+            borderRadius: "16px",
+            border: "2px solid #E6F3F3",
+            overflow: "hidden",
+            boxShadow: "none",
+            "&.Mui-expanded": {
+              borderColor: "#CBEAEC",
+              backgroundColor: "#E8F4F5",
+            },
+          }}
+        >
+          <AccordionSummary
+            expandIcon={
+              <ExpandMoreIcon
+                sx={{
+                  color: expanded === i ? "#03373d" : "#6b7280",
+                  transform: expanded === i ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "0.3s",
+                }}
+              />
+            }
+            sx={{
+              px: 3,
+              py: 2,
+              "& .MuiAccordionSummary-content": {
+                margin: 0,
+              },
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+                color: "#03373d",
+                fontSize: { xs: "0.95rem", lg: "1.1rem" },
+              }}
+            >
+              {faq.question}
+            </Typography>
+          </AccordionSummary>
+
+          <AccordionDetails
+            sx={{
+              px: 3,
+              pb: 3,
+              backgroundColor: "#E8F4F5",
+            }}
+          >
+            <Typography
+              sx={{
+                color: "#4b5563",
+                fontSize: { xs: "0.9rem", lg: "1rem" },
+                lineHeight: 1.7,
+              }}
+            >
+              {faq.answer}
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      ))}
     </div>
   );
-};
-
-export default Faq;
+}
