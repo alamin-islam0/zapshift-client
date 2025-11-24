@@ -5,6 +5,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import HeroIcon from "../../assets/hero-icon.svg";
 import HeroBanner from "../../assets/hero-banner.svg";
+import DoorStopDeli from "../../assets/delivery-doorstop.svg";
+import DeliveryPick from "../../assets/delivery-pickup.svg";
 import { GoArrowUpRight } from "react-icons/go";
 
 const HeroSection = () => {
@@ -29,7 +31,7 @@ const HeroSection = () => {
       subtitle: "Across Bangladesh",
       description:
         "We deliver to every corner of Bangladesh with 100% safety guarantee. Express delivery available in major cities within 4-6 hours.",
-      image: HeroBanner,
+      image: DoorStopDeli,
       buttons: [
         { text: "Get Started", primary: true },
         { text: "Learn More", primary: false },
@@ -42,7 +44,7 @@ const HeroSection = () => {
       subtitle: "For Business Growth",
       description:
         "From SME to corporate solutions, we provide customized delivery services with inventory management and real-time tracking support.",
-      image: HeroBanner,
+      image: DeliveryPick,
       buttons: [
         { text: "Become a Merchant", primary: true },
         { text: "View Pricing", primary: false },
@@ -61,7 +63,7 @@ const HeroSection = () => {
           bulletActiveClass: "hero-pagination-bullet-active",
         }}
         autoplay={{
-          delay: 5000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         loop={true}
