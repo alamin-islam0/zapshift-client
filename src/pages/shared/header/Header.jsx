@@ -1,7 +1,7 @@
 import React from "react";
-import Logo from "../../../assets/logo.svg";
 import { NavLink } from "react-router";
 import { GoArrowUpRight } from "react-icons/go";
+import Logo from "../../../components/logo/Logo";
 
 const Header = () => {
   const links = (
@@ -53,7 +53,7 @@ const Header = () => {
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">
-            <img src={Logo} alt="logo" className="h-8" />
+            <Logo/>
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">

@@ -1,5 +1,6 @@
 import React from "react";
 import { Linkedin, X, Facebook, Youtube } from "lucide-react";
+import { FootLogo } from "../../../components/logo/Logo";
 
 const navLinks = [
   "Services",
@@ -24,12 +25,7 @@ export default function Footer() {
         <div className="max-w-6xl mx-auto px-6 lg:px-20">
           <div className="flex flex-col items-center text-center">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-md flex items-center justify-center bg-[#caeb66]">
-                <span className="text-black font-bold">Z</span>
-              </div>
-              <h1 className="text-2xl lg:text-3xl font-bold tracking-tight">
-                ZapShift
-              </h1>
+              <FootLogo/>
             </div>
 
             <p className="text-gray-300 text-sm lg:text-base max-w-2xl leading-relaxed">
