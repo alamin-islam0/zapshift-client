@@ -7,7 +7,7 @@ import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 import axios from "axios";
 
 const Register = () => {
-  const { registerUser } = useAuth();
+  const { registerUser, updateUserProfile } = useAuth();
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -31,10 +31,23 @@ const Register = () => {
         formData.append("image", profileImg);
 
         const imageApiURL = `https://api.imgbb.com/1/upload?key=${
-          import.meta.env.VITE_image_host_key
-        }`;
-        axios.post(imageApiURL, formData).then((res) => {
-          console.log("After image upload", res);
+          import.meta.env.VITE_image_host_key}`;
+        axios.post(imageApiURL, formData)
+        .then((res) => {
+          console.log("After image upload", res.data.data.url);
+
+          //Update user profile
+          const userProfile = {
+            displayName: data.name,
+            photoURL: res.data.data.url
+          }
+          updateUserProfile(userProfile)
+          .then(result => {
+            console.log('User profile updated done', result)
+          })
+          .catch(error => {
+            console.log(error)
+          })
         });
 
         //
