@@ -73,7 +73,7 @@ const Faq = () => {
                     {faq.question}
                   </span>
                   <span
-                    className={`text-xl lg:text-2xl flex-shrink-0 transition-all duration-500 ease-in-out ${
+                    className={`text-xl lg:text-2xl transition-all duration-500 ease-in-out ${
                       isOpen
                         ? "rotate-180 text-[#03373d]"
                         : "rotate-0 text-gray-600"

@@ -6,7 +6,7 @@ import FooterLogo from '../../assets/FooterLogo.svg'
 const Logo = () => {
     return (
         <div>
-            <img src={SiteLogo} alt="" srcset="" className="h-8" />
+            <img src={SiteLogo} alt="" className="h-8" />
         </div>
     );
 };
@@ -14,7 +14,7 @@ const Logo = () => {
 export const FootLogo = () => {
     return (
         <div>
-            <img src={FooterLogo} alt="" srcset="" />
+            <img src={FooterLogo} alt=""/>
         </div>
     )
 }

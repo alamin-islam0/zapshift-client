@@ -4,6 +4,9 @@ import Home from "../pages/home/Home";
 import Coverage from "../pages/coverage/Coverage";
 import About from "../pages/about/About";
 import Error from "../pages/error/Error";
+import AuthLayout from "../layouts/AuthLayout";
+import Login from "../pages/auth/login/Login";
+import Register from "../pages/auth/register/Register";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +27,20 @@ export const router = createBrowserRouter([
         Component: About,
       },
     ],
+  },
+  {
+    path: '/',
+    Component: AuthLayout,
+    children: [
+        {
+            path: 'login',
+            Component: Login
+        },
+        {
+            path: 'register',
+            Component: Register
+        },
+    ]
   },
   {
     path: "*",
