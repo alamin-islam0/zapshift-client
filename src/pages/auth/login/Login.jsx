@@ -1,8 +1,8 @@
 import React from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
-import { BsGoogle } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 
 const Login = () => {
 
@@ -136,19 +136,7 @@ const Login = () => {
           </a>
         </p>
         {/* GOOGLE SIGN-IN BUTTON */}
-        <button
-          type="button"
-          className="w-full mt-6 flex items-center justify-center gap-3 bg-white border border-gray-200 rounded-full py-3 mb-6 shadow-sm hover:bg-gray-50 transition"
-        >
-          {/* Google Icon made using Lucide */}
-          <div>
-            <BsGoogle />
-          </div>
-
-          <span className=" font-semibold text-[#03373d]">
-            Continue with Google
-          </span>
-        </button>
+        <SocialLogin/>
       </div>
     </div>
   );
