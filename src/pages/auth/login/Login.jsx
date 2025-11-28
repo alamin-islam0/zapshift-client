@@ -1,11 +1,9 @@
 import React from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { BsGoogle } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const {

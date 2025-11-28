@@ -7,8 +7,10 @@ import Login from '../pages/auth/login/Login';
 const AuthLayout = () => {
     return (
         <div className='max-w-7xl mx-auto'>
-            <Logo/>
-            <div className='flex'>
+            <div className='w-2xs'>
+                <Logo/>
+            </div>
+            <div className='flex items-center'>
                 <div className='flex-1'>
                     <Outlet>
                         <Login/>
