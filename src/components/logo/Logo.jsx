@@ -1,12 +1,13 @@
 import React from 'react';
 import SiteLogo from '../../assets/logo.svg'
 import FooterLogo from '../../assets/FooterLogo.svg'
+import { Link } from 'react-router';
 
 // Header Logo
 const Logo = () => {
     return (
         <div>
-            <img src={SiteLogo} alt="" className="" />
+            <Link to={"/"}><img src={SiteLogo} alt="" className="" /></Link>
         </div>
     );
 };
@@ -14,7 +15,7 @@ const Logo = () => {
 export const FootLogo = () => {
     return (
         <div>
-            <img src={FooterLogo} alt=""/>
+            <Link to={"/"}><img src={FooterLogo} alt=""/></Link>
         </div>
     )
 }

@@ -1,9 +1,23 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { GoArrowUpRight } from "react-icons/go";
 import Logo from "../../../components/logo/Logo";
+import useAuth from "../../../hooks/useAuth";
 
 const Header = () => {
+
+  const { user, logOut } = useAuth();
+
+  const handleLogOut = () => {
+    logOut()
+    .then(result => {
+        console.log(result)
+    })
+    .catch(error => {
+        console.log(error)
+    })
+  }
+
   const links = (
     <>
       <li>
@@ -52,9 +66,9 @@ const Header = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">
-            <Logo/>
-          </a>
+          <div className=" btn-ghost">
+            <Logo />
+          </div>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-6 font-medium text-gray-600">
@@ -62,10 +76,22 @@ const Header = () => {
           </ul>
         </div>
         <div className="navbar-end gap-4">
-          <a className="btn btn-ghost border border-gray-200 rounded-full px-6 hover:bg-gray-50">
+          {
+            user? 
+            <a
+            onClick={handleLogOut}
+            className="btn btn-ghost border border-gray-200 rounded-full px-6 hover:bg-gray-50"
+          >
+            Logout
+          </a> :
+          <Link
+            to={"/register"}
+            className="btn btn-ghost border border-gray-200 rounded-full px-6 hover:bg-gray-50"
+          >
             Sign In
-          </a>
-          <a className="hidden lg:flex btn bg-[#D9F27E] hover:bg-[#cce865] text-black rounded-full px-2 pl-6 items-center gap-2 border-none">
+          </Link>
+          }
+          <a href="/" className="hidden lg:flex btn bg-[#D9F27E] hover:bg-[#cce865] text-black rounded-full px-2 pl-6 items-center gap-2 border-none">
             Be a rider
             <span className="bg-[#1A1A1A] text-white p-2 rounded-full">
               <GoArrowUpRight className="text-lg" />

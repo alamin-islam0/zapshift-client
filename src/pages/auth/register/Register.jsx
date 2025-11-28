@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { FaRegUser } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../../../components/SocialLogin/SocialLogin";
+import axios from "axios";
 
 const Register = () => {
-
   const { registerUser } = useAuth();
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -18,14 +18,30 @@ const Register = () => {
   } = useForm();
 
   const handleRegister = (data) => {
-    console.log("after submit", data);
+    console.log("after register", data.photo[0]);
+
+    const profileImg = data.photo[0];
+
     registerUser(data.email, data.password)
-    .then(result => {
-        console.log(result)
-    })
-    .catch(error => {
-        console.log(error)
-    })
+      .then((result) => {
+        console.log(result.user);
+
+        //Store the img and get photo url
+        const formData = new FormData();
+        formData.append("image", profileImg);
+
+        const imageApiURL = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host_key
+        }`;
+        axios.post(imageApiURL, formData).then((res) => {
+          console.log("After image upload", res);
+        });
+
+        //
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -53,6 +69,22 @@ const Register = () => {
             </div>
             {errors.name?.type === "required" && (
               <small className="text-red-500">Enter your name</small>
+            )}
+          </div>
+          {/* Photo */}
+          <div>
+            <label className="text-sm font-medium text-[#03373d]">Photo</label>
+            <div className="file-input w-full mt-2 flex items-center bg-[#F2F7F6] rounded-full px-4 py-3 border border-transparent focus-within:border-[#CBEAEC]">
+              <FaRegUser className="w-5 h-5 text-gray-500" />
+              <input
+                {...register("photo", { required: true })}
+                type="file"
+                placeholder="file"
+                className="w-full ml-3 bg-transparent outline-none text-sm placeholder:text-gray-400"
+              />
+            </div>
+            {errors.photo?.type === "required" && (
+              <small className="text-red-500">Enter your photo</small>
             )}
           </div>
           {/* Email */}
@@ -151,7 +183,7 @@ const Register = () => {
           </a>
         </p>
         {/* GOOGLE SIGN-IN BUTTON */}
-        <SocialLogin/>
+        <SocialLogin />
       </div>
     </div>
   );
