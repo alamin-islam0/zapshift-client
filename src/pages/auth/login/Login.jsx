@@ -2,8 +2,12 @@ import React from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { BsGoogle } from "react-icons/bs";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
+
+  const { signInUser } = useAuth();
+
   const [showPassword, setShowPassword] = React.useState(false);
 
   const {
@@ -11,12 +15,20 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const handleLogin = (data) => {
     console.log("after submit", data);
+    signInUser(data.email, data.password)
+    .then(result => {
+        console.log(result)
+    })
+    .catch(error => {
+        console.log(error)
+    })
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-6 py-10">
+    <div className="min-h-screen flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-[#E6F3F3]">
         {/* Title */}
         <h2 className="text-3xl font-bold text-[#03373d] mb-2 text-left">
@@ -118,7 +130,7 @@ const Login = () => {
           Don’t have an account?{" "}
           <a
             href="/register"
-            className="text-[#03373d] font-semibold hover:underline"
+            className="text-primary font-semibold hover:underline"
           >
             Create one
           </a>

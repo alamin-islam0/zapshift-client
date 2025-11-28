@@ -3,8 +3,12 @@ import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { BsGoogle } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { FaRegUser } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
+
+  const { registerUser } = useAuth();
+
   const [showPassword, setShowPassword] = React.useState(false);
 
   const {
@@ -12,8 +16,16 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const handleRegister = (data) => {
     console.log("after submit", data);
+    registerUser(data.email, data.password)
+    .then(result => {
+        console.log(result)
+    })
+    .catch(error => {
+        console.log(error)
+    })
   };
 
   return (
@@ -133,7 +145,7 @@ const Register = () => {
           Already have an account?{" "}
           <a
             href="/login"
-            className="text-[#03373d] font-semibold hover:underline"
+            className="text-primary font-semibold hover:underline"
           >
             Login
           </a>
