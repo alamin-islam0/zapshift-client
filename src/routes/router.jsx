@@ -9,6 +9,7 @@ import Login from "../pages/auth/login/Login";
 import Register from "../pages/auth/register/Register";
 import PrivateRoute from "./PrivateRoute";
 import Rider from "../pages/rider/Rider";
+import SendParcel from "../pages/SendParcel/SendParcel";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "about-us",
         Component: About,
+      },
+      {
+        path: 'send-parcel',
+        element: <PrivateRoute><SendParcel/></PrivateRoute>
       },
     ],
   },
