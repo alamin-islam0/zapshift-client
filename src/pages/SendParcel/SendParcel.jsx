@@ -2,6 +2,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { ChevronDown } from "lucide-react";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 const SendParcel = () => {
   const {
@@ -14,6 +16,9 @@ const SendParcel = () => {
       parcelType: "document",
     },
   });
+
+  const {user} = useAuth()
+  const axiosSecure = useAxiosSecure();
 
   const serviceCenters = useLoaderData();
   const regionsDuplicate = serviceCenters.map((c) => c.region);
@@ -60,7 +65,11 @@ const SendParcel = () => {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        
+        //Save to parcel info to database
+        axiosSecure.post('/parcels', data)
+        .then( res => {
+          console.log('after saving parcel', res.data)
+        })
 
         // Swal.fire({
         //   title: "Cancel!",
@@ -166,6 +175,8 @@ const SendParcel = () => {
                   {...register("senderName", { required: true })}
                   type="text"
                   placeholder="Sender Name"
+                  defaultValue={user?.displayName}
+                  readOnly={true}
                   className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#caeb66] focus:ring-1 focus:ring-[#caeb66] transition-all placeholder:text-gray-300"
                 />
                 {errors.senderName && (
@@ -202,6 +213,23 @@ const SendParcel = () => {
                 />
                 {errors.senderPhone && (
                   <small className="text-red-500">Phone is required</small>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-[#03373d]">
+                  Sender Email
+                </label>
+                <input
+                  {...register("senderEmail", { required: true })}
+                  type="email"
+                  placeholder="Sender Email"
+                  defaultValue={user?.email}
+                  readOnly={true}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#caeb66] focus:ring-1 focus:ring-[#caeb66] transition-all placeholder:text-gray-300"
+                />
+                {errors.senderEmail && (
+                  <small className="text-red-500">Email is required</small>
                 )}
               </div>
 
@@ -319,6 +347,21 @@ const SendParcel = () => {
                 />
                 {errors.receiverContact && (
                   <small className="text-red-500">Contact is required</small>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-[#03373d]">
+                  Receiver Email
+                </label>
+                <input
+                  {...register("receiverEmail", { required: true })}
+                  type="email"
+                  placeholder="Receiver Email"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-[#caeb66] focus:ring-1 focus:ring-[#caeb66] transition-all placeholder:text-gray-300"
+                />
+                {errors.receiverEmail && (
+                  <small className="text-red-500">Email is required</small>
                 )}
               </div>
 
