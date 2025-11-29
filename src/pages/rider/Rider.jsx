@@ -24,7 +24,7 @@ const Rider = () => {
   };
 
   return (
-    <div className="py-12 lg:py-20 bg-white rounded-4xl my-10">
+    <div className="py-12 mx-4 lg:py-20 lg:mx-0 bg-white rounded-4xl my-10">
       <div className="container mx-auto px-6 lg:px-20">
         {/* Header Section */}
         <div className="mb-12 lg:mb-16">

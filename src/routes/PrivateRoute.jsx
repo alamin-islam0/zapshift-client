@@ -1,18 +1,19 @@
 import React from 'react';
 import useAuth from '../hooks/useAuth';
-import { Navigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 import Loader from '../components/spinner/LoadingSpinner';
 
 const PrivateRoute = ({children}) => {
 
     const {user, loading} = useAuth();
+    const location = useLocation();
 
     if( loading) {
-        return <div><Loader/></div>
+        return <div className='flex justify-center items-center'><Loader/></div>
     }
 
     if(!user) {
-        return <Navigate to={'/login'}></Navigate>
+        return <Navigate state={location.pathname} to={'/login'}></Navigate>
     }
 
     return children;

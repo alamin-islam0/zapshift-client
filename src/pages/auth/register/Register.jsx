@@ -5,6 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 import axios from "axios";
+import { Link, useLocation, useNavigate } from "react-router";
 
 const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
@@ -16,6 +17,11 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log('in register', location)
 
   const handleRegister = (data) => {
     console.log("after register", data.photo[0]);
@@ -44,6 +50,7 @@ const Register = () => {
           updateUserProfile(userProfile)
           .then(result => {
             console.log('User profile updated done', result)
+            navigate(location.state || '/')
           })
           .catch(error => {
             console.log(error)
@@ -188,12 +195,13 @@ const Register = () => {
         {/* Footer */}
         <p className="text-center mt-6 text-sm text-gray-600">
           Already have an account?{" "}
-          <a
-            href="/login"
+          <Link
+            state={location.state}
+            to={'/login'}
             className="text-primary font-semibold hover:underline"
           >
             Login
-          </a>
+          </Link>
         </p>
         {/* GOOGLE SIGN-IN BUTTON */}
         <SocialLogin />

@@ -3,6 +3,7 @@ import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../../../components/SocialLogin/SocialLogin";
+import { Link, useLocation, useNavigate } from "react-router";
 
 const Login = () => {
 
@@ -16,11 +17,15 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const handleLogin = (data) => {
     console.log("after submit", data);
     signInUser(data.email, data.password)
     .then(result => {
         console.log(result)
+        navigate(location?.state || '/')
     })
     .catch(error => {
         console.log(error)
@@ -128,12 +133,13 @@ const Login = () => {
         {/* Footer */}
         <p className="text-center mt-6 text-sm text-gray-600">
           Don’t have an account?{" "}
-          <a
-            href="/register"
+          <Link
+            state={location.state}
+            to={'/register'}
             className="text-primary font-semibold hover:underline"
           >
             Create one
-          </a>
+          </Link>
         </p>
         {/* GOOGLE SIGN-IN BUTTON */}
         <SocialLogin/>

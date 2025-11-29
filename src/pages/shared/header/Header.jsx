@@ -91,7 +91,7 @@ const Header = () => {
             Sign In
           </Link>
           }
-          <a href="/" className="hidden lg:flex btn bg-[#D9F27E] hover:bg-[#cce865] text-black rounded-full px-2 pl-6 items-center gap-2 border-none">
+          <a href="/rider" className="hidden lg:flex btn bg-[#D9F27E] hover:bg-[#cce865] text-black rounded-full px-2 pl-6 items-center gap-2 border-none">
             Be a rider
             <span className="bg-[#1A1A1A] text-white p-2 rounded-full">
               <GoArrowUpRight className="text-lg" />
