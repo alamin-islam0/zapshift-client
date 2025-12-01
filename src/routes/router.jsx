@@ -10,6 +10,10 @@ import Register from "../pages/auth/register/Register";
 import PrivateRoute from "./PrivateRoute";
 import Rider from "../pages/rider/Rider";
 import SendParcel from "../pages/SendParcel/SendParcel";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MyParcels from "../pages/dashboard/MyParcel/MyParcels";
+import Overview from "../pages/dashboard/Overview/Overview";
+import Payment from "../pages/dashboard/payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +26,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'rider',
-        element: <PrivateRoute><Rider/></PrivateRoute>
+        element: <PrivateRoute><Rider /></PrivateRoute>
       },
       {
         path: "coverage",
@@ -35,7 +39,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'send-parcel',
-        element: <PrivateRoute><SendParcel/></PrivateRoute>,
+        element: <PrivateRoute><SendParcel /></PrivateRoute>,
         loader: () => fetch("/serviceCenter.json").then((res) => res.json())
       },
     ],
@@ -44,14 +48,37 @@ export const router = createBrowserRouter([
     path: '/',
     Component: AuthLayout,
     children: [
-        {
-            path: 'login',
-            Component: Login
-        },
-        {
-            path: 'register',
-            Component: Register
-        },
+      {
+        path: 'login',
+        Component: Login
+      },
+      {
+        path: 'register',
+        Component: Register
+      },
+    ]
+  },
+  {
+    path: 'dashboard',
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    children: [
+      {
+        index: true,
+        Component: Overview
+      },
+      {
+        path: 'my-parcels',
+        Component: MyParcels
+      },
+      {
+        path: 'add-parcel',
+        Component: SendParcel,
+        loader: () => fetch("/serviceCenter.json").then((res) => res.json())
+      },
+      {
+        path: 'payment/:parcelId',
+        Component: Payment
+      }
     ]
   },
   {

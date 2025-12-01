@@ -38,6 +38,14 @@ const Header = () => {
       <li>
         <NavLink to="/rider">Be a Rider</NavLink>
       </li>
+
+      {
+        user && <> 
+        <li>
+            <NavLink to="/dashboard/my-parcels">My Parcels</NavLink>
+        </li>
+        </>
+      }
     </>
   );
   return (

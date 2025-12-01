@@ -10,6 +10,7 @@ const SendParcel = () => {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -53,6 +54,7 @@ const SendParcel = () => {
       }
     }
     console.log("cost", cost);
+    data.cost = cost;
 
     Swal.fire({
       title: "Agree with the Cost?",
@@ -69,6 +71,7 @@ const SendParcel = () => {
         axiosSecure.post('/parcels', data)
         .then( res => {
           console.log('after saving parcel', res.data)
+          reset();
         })
 
         // Swal.fire({
