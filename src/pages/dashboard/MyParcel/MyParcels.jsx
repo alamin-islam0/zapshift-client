@@ -4,13 +4,17 @@ import { Calendar, Filter, MoreVertical, Edit2 } from "lucide-react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { Link } from "react-router";
+import Button from "@mui/material/Button";
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { data: parcels = [], refetch, isLoading } = useQuery({
+  const {
+    data: parcels = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["myParcels", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
@@ -34,7 +38,7 @@ const MyParcels = () => {
         axiosSecure.delete(`parcels/${id}`).then((res) => {
           console.log(res.data);
           if (res.data.deletedCount) {
-            refetch()
+            refetch();
             Swal.fire({
               title: "Deleted!",
               text: "Your parcel request has been deleted.",
@@ -44,6 +48,17 @@ const MyParcels = () => {
         });
       }
     });
+  };
+
+  const handlePayment = async(parcel) => {
+    const paymentInfo = {
+        cost: parcel.cost,
+        parcelId: parcel._id,
+        senderEmail: parcel.senderEmail,
+        parcelName: parcel.parcelName,
+    }
+    const res = await axiosSecure.post('/create-checkout-session', paymentInfo)
+    window.location.href = res.data.url
   };
 
   // Helper function to format date
@@ -136,11 +151,18 @@ const MyParcels = () => {
                       ৳{parcel.cost}
                     </td>
                     <td className="py-3 text-gray-700 font-medium">
-                      {
-                        parcel.paymentStatus === 'paid' ? 
-                        <span className="bg-green-100 px-2 py-1 rounded-full text-xs font-medium text-green-700">Paid</span> :
-                        <Link to={`/dashboard/payment/${parcel._id}`} className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">Pay</Link>
-                      }
+                      {parcel.paymentStatus === "paid" ? (
+                        <span className="bg-green-100 px-2 py-1 rounded-full text-xs font-medium text-green-700">
+                          Paid
+                        </span>
+                      ) : (
+                        <Button
+                          onClick={() => handlePayment(parcel)}
+                          className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700"
+                        >
+                          Pay
+                        </Button>
+                      )}
                     </td>
                     <td className="py-3">
                       <span
