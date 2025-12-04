@@ -19,7 +19,7 @@ const MyParcels = () => {
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
       return res.data;
-    },
+    }, 
   });
 
   const handleParcelDelete = (id) => {
@@ -58,7 +58,7 @@ const MyParcels = () => {
         parcelName: parcel.parcelName,
     }
     const res = await axiosSecure.post('/create-checkout-session', paymentInfo)
-    window.location.href = res.data.url
+    window.location.assign(res.data.url)
   };
 
   // Helper function to format date
@@ -133,7 +133,7 @@ const MyParcels = () => {
                     key={parcel._id || index}
                     className="text-sm text-gray-700 border-b border-gray-50 hover:bg-gray-50"
                   >
-                    <td className="py-3 font-medium">{parcel.parcelId}</td>
+                    <td className="py-3 font-medium">{parcel.trackingId}</td>
                     <td className="py-3 font-medium">{parcel.parcelName}</td>
                     <td className="py-3 text-gray-600">
                       {parcel.receiverName}

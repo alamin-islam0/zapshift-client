@@ -14,6 +14,7 @@ import {
   Menu,
   Bell,
   PackageCheck,
+  CreditCardIcon,
 } from "lucide-react";
 import Logo from "../components/logo/Logo";
 import useAuth from "../hooks/useAuth";
@@ -36,6 +37,7 @@ const DashboardLayout = () => {
           icon: PackageCheck,
           path: "/dashboard/my-parcels",
         },
+        { name: "Payment History", icon: CreditCardIcon, path: "/dashboard/payments-history" },
         { name: "Deliveries", icon: Truck, path: "/dashboard/deliveries" },
         { name: "Invoices", icon: FileText, path: "/dashboard/invoices" },
         { name: "Stores", icon: Store, path: "/dashboard/stores" },
