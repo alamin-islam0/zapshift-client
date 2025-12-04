@@ -1,17 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Eye, Calendar, Filter, MoreVertical } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const PaymentsHistory = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const { data: payments = [], isLoading } = useQuery({
-    queryKey: ["payments", user.email],
+    queryKey: ["payments", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/payments?email=${user.email}`);
+      const res = await axiosSecure.get(`/payments?email=${user?.email}`);
       return res.data;
     },
   });
@@ -28,8 +30,7 @@ const PaymentsHistory = () => {
   };
 
   const handleView = (payment) => {
-    console.log("View payment:", payment);
-    // Add your view logic here
+    navigate(`/dashboard/payment-details/${payment._id}`);
   };
 
   return (

@@ -10,6 +10,7 @@ const Login = () => {
   const { signInUser } = useAuth();
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   const {
     register,
@@ -21,15 +22,37 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
+    // Clear any previous error messages
+    setErrorMessage("");
+
     console.log("after submit", data);
     signInUser(data.email, data.password)
-    .then(result => {
+      .then(result => {
         console.log(result)
         navigate(location?.state || '/')
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.log(error)
-    })
+
+        // Handle Firebase authentication errors
+        let message = "Login failed. Please try again.";
+
+        if (error.code === "auth/wrong-password") {
+          message = "Incorrect password. Please try again.";
+        } else if (error.code === "auth/user-not-found") {
+          message = "No account found with this email. Please register first.";
+        } else if (error.code === "auth/invalid-email") {
+          message = "Invalid email address. Please check and try again.";
+        } else if (error.code === "auth/user-disabled") {
+          message = "This account has been disabled. Please contact support.";
+        } else if (error.code === "auth/too-many-requests") {
+          message = "Too many failed login attempts. Please try again later.";
+        } else if (error.code === "auth/invalid-credential") {
+          message = "Invalid email or password. Please check your credentials.";
+        }
+
+        setErrorMessage(message);
+      })
   };
 
   return (
@@ -42,6 +65,33 @@ const Login = () => {
         <p className="text-gray-600 mb-8 text-left">
           Login to continue your deliveries
         </p>
+
+        {/* Error Message */}
+        {errorMessage && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+            <div className="flex-1">
+              <p className="text-sm text-red-800">{errorMessage}</p>
+            </div>
+            <button
+              onClick={() => setErrorMessage("")}
+              className="text-red-500 hover:text-red-700"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit(handleLogin)} className="space-y-5">
@@ -142,7 +192,7 @@ const Login = () => {
           </Link>
         </p>
         {/* GOOGLE SIGN-IN BUTTON */}
-        <SocialLogin/>
+        <SocialLogin />
       </div>
     </div>
   );

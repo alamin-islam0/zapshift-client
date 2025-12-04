@@ -6,6 +6,7 @@ import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
@@ -20,11 +21,11 @@ const Register = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
-  console.log('in register', location)
+  console.log("in register", location);
 
   const handleRegister = (data) => {
-    console.log("after register", data.photo[0]);
 
     const profileImg = data.photo[0];
 
@@ -36,25 +37,36 @@ const Register = () => {
         const formData = new FormData();
         formData.append("image", profileImg);
 
-        const imageApiURL = `https://api.imgbb.com/1/upload?key=${
-          import.meta.env.VITE_image_host_key}`;
-        axios.post(imageApiURL, formData)
-        .then((res) => {
-          console.log("After image upload", res.data.data.url);
+        const imageApiURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key
+          }`;
+        axios.post(imageApiURL, formData).then((res) => {
+          const photoURL = res.data.data.url;
 
+          //create user in database
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: photoURL,
+          }
+          axiosSecure.post('/users', userInfo)
+            .then(res => {
+              if (res.data.insertedId) {
+                console.log('user created on the database')
+              }
+            })
           //Update user profile
           const userProfile = {
             displayName: data.name,
-            photoURL: res.data.data.url
-          }
+            photoURL: photoURL
+          };
           updateUserProfile(userProfile)
-          .then(result => {
-            console.log('User profile updated done', result)
-            navigate(location.state || '/')
-          })
-          .catch(error => {
-            console.log(error)
-          })
+            .then((result) => {
+              console.log("User profile updated done", result);
+              navigate(location.state || "/");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         });
 
         //
@@ -197,7 +209,7 @@ const Register = () => {
           Already have an account?{" "}
           <Link
             state={location.state}
-            to={'/login'}
+            to={"/login"}
             className="text-primary font-semibold hover:underline"
           >
             Login
