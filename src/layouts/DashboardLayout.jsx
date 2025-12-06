@@ -16,6 +16,7 @@ import {
   Bell,
   PackageCheck,
   CreditCardIcon,
+  User2,
 } from "lucide-react";
 import Logo from "../components/logo/Logo";
 import useAuth from "../hooks/useAuth";
@@ -50,6 +51,7 @@ const DashboardLayout = () => {
     {
       label: "GENERAL",
       items: [
+        {name: "User Management", icon: User2, path: "/dashboard/user-management"},
         { name: "Settings", icon: Settings, path: "/dashboard/settings" },
         {
           name: "Change Password",

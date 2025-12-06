@@ -126,16 +126,16 @@ const RiderStatus = () => {
 
   const [actionLoading, setActionLoading] = useState(false);
 
-  const confirmAction = async (id) => {
-    if (!id) return;
+  const confirmAction = async (rider) => {
+    if (!rider) return;
 
     // Determine final status from actionType
     const finalStatus = actionType === "approve" ? "approved" : "rejected";
-    const updateInfo = { status: finalStatus };
+    const updateInfo = { status: finalStatus, email: rider.email };
 
     try {
       setActionLoading(true);
-      const res = await axiosSecure.patch(`/riders/${id}`, updateInfo);
+      const res = await axiosSecure.patch(`/riders/${rider._id}`, updateInfo);
 
       // depending on your server response shape:
       // result.modifiedCount (Mongo) or res.data.modifiedCount
@@ -774,7 +774,7 @@ const RiderStatus = () => {
 
             <div className="flex gap-3">
               <button
-                onClick={() => confirmAction(selectedRider._id)}
+                onClick={() => confirmAction(selectedRider)}
                 disabled={actionLoading}
                 className={`flex-1 px-6 py-3 text-white rounded-lg transition-colors font-semibold ${
                   actionType === "approve"

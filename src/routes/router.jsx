@@ -19,6 +19,7 @@ import PaymentCancelled from "../pages/dashboard/payment/PaymentCancelled";
 import PaymentsHistory from "../pages/dashboard/PaymentHistory/PaymentsHistory";
 import PaymentDetails from "../pages/dashboard/PaymentHistory/PaymentDetails";
 import RiderStatus from "../pages/dashboard/RiderStatus/RiderStatus";
+import UserManagement from "../pages/dashboard/UserManagement/UserManagement";
 
 export const router = createBrowserRouter([
   {
@@ -104,7 +105,11 @@ export const router = createBrowserRouter([
       {
         path: 'rider-status',
         Component: RiderStatus
-      }
+      },
+      {
+        path: 'user-management',
+        Component: UserManagement
+      },
     ]
   },
   {

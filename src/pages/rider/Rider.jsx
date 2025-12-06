@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
 import { FaRegUser } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useLoaderData } from "react-router";
 import { TbLicense } from "react-icons/tb";
@@ -25,7 +25,7 @@ const Rider = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const serviceCenters = useLoaderData();
