@@ -20,6 +20,7 @@ import PaymentsHistory from "../pages/dashboard/PaymentHistory/PaymentsHistory";
 import PaymentDetails from "../pages/dashboard/PaymentHistory/PaymentDetails";
 import RiderStatus from "../pages/dashboard/RiderStatus/RiderStatus";
 import UserManagement from "../pages/dashboard/UserManagement/UserManagement";
+import AdminRoutes from "./AdminRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -104,11 +105,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'rider-status',
-        Component: RiderStatus
+        element: <AdminRoutes><RiderStatus/></AdminRoutes>
       },
       {
         path: 'user-management',
-        Component: UserManagement
+        element: <AdminRoutes><UserManagement/></AdminRoutes>
       },
     ]
   },

@@ -20,8 +20,10 @@ import {
 } from "lucide-react";
 import Logo from "../components/logo/Logo";
 import useAuth from "../hooks/useAuth";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
+  const { role } = useRole();
   const { user } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -39,19 +41,35 @@ const DashboardLayout = () => {
           icon: PackageCheck,
           path: "/dashboard/my-parcels",
         },
-        { name: "Payment History", icon: CreditCardIcon, path: "/dashboard/payments-history" },
-        { name: "Rider Status", icon: MdOutlineDeliveryDining, path: "/dashboard/rider-status" },
+        {
+          name: "Payment History",
+          icon: CreditCardIcon,
+          path: "/dashboard/payments-history",
+        },
+        role === "admin"
+          ? {
+              name: "Rider Status",
+              icon: MdOutlineDeliveryDining,
+              path: "/dashboard/rider-status",
+            }
+          : null,
         { name: "Deliveries", icon: Truck, path: "/dashboard/deliveries" },
         { name: "Invoices", icon: FileText, path: "/dashboard/invoices" },
         { name: "Stores", icon: Store, path: "/dashboard/stores" },
         { name: "Pricing Plan", icon: CreditCard, path: "/dashboard/pricing" },
         { name: "Coverage Area", icon: Map, path: "/dashboard/coverage" },
-      ],
+      ].filter(Boolean),
     },
     {
       label: "GENERAL",
       items: [
-        {name: "User Management", icon: User2, path: "/dashboard/user-management"},
+        role === "admin"
+          ? {
+              name: "User Management",
+              icon: User2,
+              path: "/dashboard/user-management",
+            }
+          : null,
         { name: "Settings", icon: Settings, path: "/dashboard/settings" },
         {
           name: "Change Password",
@@ -65,7 +83,7 @@ const DashboardLayout = () => {
           path: "/logout",
           className: "text-red-500 hover:bg-red-50",
         },
-      ],
+      ].filter(Boolean),
     },
   ];
 
