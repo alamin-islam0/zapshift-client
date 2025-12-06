@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Outlet, NavLink } from "react-router";
+import { MdOutlineDeliveryDining } from "react-icons/md";
 import {
   LayoutDashboard,
   Truck,
@@ -38,6 +39,7 @@ const DashboardLayout = () => {
           path: "/dashboard/my-parcels",
         },
         { name: "Payment History", icon: CreditCardIcon, path: "/dashboard/payments-history" },
+        { name: "Rider Status", icon: MdOutlineDeliveryDining, path: "/dashboard/rider-status" },
         { name: "Deliveries", icon: Truck, path: "/dashboard/deliveries" },
         { name: "Invoices", icon: FileText, path: "/dashboard/invoices" },
         { name: "Stores", icon: Store, path: "/dashboard/stores" },

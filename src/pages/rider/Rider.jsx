@@ -9,18 +9,51 @@ import {
   Building2,
   Send,
 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { FaRegUser } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useLoaderData } from "react-router";
+import { TbLicense } from "react-icons/tb";
+import Swal from "sweetalert2";
 
 const Rider = () => {
   const {
     register,
     handleSubmit,
+    control,
+    reset,
     formState: { errors },
   } = useForm();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const serviceCenters = useLoaderData();
+  const regionsDuplicate = serviceCenters.map((c) => c.region);
+  const regions = [...new Set(regionsDuplicate)];
+
+  const districtsByRegion = (region) => {
+    const regionDistricts = serviceCenters.filter((c) => c.region === region);
+    const districts = regionDistricts.map((d) => d.district);
+    return districts;
+  };
+
+  const region = useWatch({ control, name: "region" });
 
   const onSubmit = (data) => {
     console.log(data);
+    reset();
+    axiosSecure.post("/riders", data).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Your application has been submitted",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    });
   };
 
   return (
@@ -103,6 +136,38 @@ const Rider = () => {
                     <small className="text-red-500">Email is required</small>
                   )}
                 </div>
+
+                {/* Region */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-[#03373d]">
+                    Your Region
+                  </label>
+                  <div className="relative flex items-center bg-[#F2F7F6] rounded-full px-4 py-3 border border-transparent focus-within:border-[#CBEAEC]">
+                    <MapPin className="w-5 h-5 text-gray-500" />
+                    <select
+                      {...register("region", { required: true })}
+                      className="ml-3 w-full bg-transparent outline-none text-sm text-gray-500 cursor-pointer appearance-none"
+                    >
+                      <option defaultValue={true} disabled={false} value="">
+                        Select your Region
+                      </option>
+                      {regions.map((r, i) => (
+                        <option key={i} value={r}>
+                          {r}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 text-gray-400 w-5 h-5 pointer-events-none" />
+                  </div>
+                  {errors.region && (
+                    <small className="text-red-500">District is required</small>
+                  )}
+                </div>
+              </div>
+
+              {/* Drivings licensees & Districts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* District */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-[#03373d]">
                     Your District
@@ -113,15 +178,40 @@ const Rider = () => {
                       {...register("district", { required: true })}
                       className="ml-3 w-full bg-transparent outline-none text-sm text-gray-500 cursor-pointer appearance-none"
                     >
-                      <option value="">Select your District</option>
-                      <option value="dhaka">Dhaka</option>
-                      <option value="chittagong">Chittagong</option>
-                      <option value="sylhet">Sylhet</option>
+                      <option defaultValue={true} value="">
+                        Select your District
+                      </option>
+                      {districtsByRegion(region).map((d, i) => (
+                        <option key={i} value={d}>
+                          {d}
+                        </option>
+                      ))}
                     </select>
                     <ChevronDown className="absolute right-4 text-gray-400 w-5 h-5 pointer-events-none" />
                   </div>
                   {errors.district && (
                     <small className="text-red-500">District is required</small>
+                  )}
+                </div>
+
+                {/* Drivings License */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-[#03373d]">
+                    Your Drivings License
+                  </label>
+                  <div className="flex items-center bg-[#F2F7F6] rounded-full px-4 py-3 border border-transparent focus-within:border-[#CBEAEC]">
+                    <TbLicense className="w-5 h-5 text-gray-500" />
+                    <input
+                      {...register("drivingLicense", { required: true })}
+                      type="number"
+                      placeholder="Driving License Number"
+                      className="ml-3 w-full bg-transparent outline-none text-sm placeholder:text-gray-400"
+                    />
+                  </div>
+                  {errors.drivingLicense && (
+                    <small className="text-red-500">
+                      Driving License is required
+                    </small>
                   )}
                 </div>
               </div>
@@ -136,7 +226,7 @@ const Rider = () => {
                     <CreditCard className="w-5 h-5 text-gray-500" />
                     <input
                       {...register("nid", { required: true })}
-                      type="text"
+                      type="number"
                       placeholder="NID"
                       className="ml-3 w-full bg-transparent outline-none text-sm placeholder:text-gray-400"
                     />
